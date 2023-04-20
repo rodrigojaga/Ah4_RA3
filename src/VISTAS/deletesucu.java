@@ -213,8 +213,7 @@ public class deletesucu extends javax.swing.JFrame {
                 "CONFIRMAR", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(respuesta==JOptionPane.YES_OPTION){
                  eliminar();       
-            JOptionPane.showMessageDialog(null, "Sucursal Eliminada");
-                //System.out.println(del);
+            JOptionPane.showMessageDialog(null, "Sucursal Eliminada", "ELIMINADA", JOptionPane.WARNING_MESSAGE);     
             }else if(respuesta==JOptionPane.NO_OPTION){
             }else{
             }

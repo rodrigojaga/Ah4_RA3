@@ -233,8 +233,7 @@ public class deleteCli extends javax.swing.JFrame {
                 "CONFIRMAR", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(respuesta==JOptionPane.YES_OPTION){
                  eliminar();       
-            JOptionPane.showMessageDialog(null, "Usuario Eliminado");
-                //System.out.println(del);
+            JOptionPane.showMessageDialog(null, "Cliente Eliminado", "ELIMINADO", JOptionPane.WARNING_MESSAGE);     
             }else if(respuesta==JOptionPane.NO_OPTION){
             }else{
             }

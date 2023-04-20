@@ -218,13 +218,13 @@ public class addCl extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "DEBE LLENAR Y/O SELECCIONAR TODOS LOS CAMPOS");
                 Color ca = new Color(255,160,160);
-            if(nomcli.getText().equals("")){
+            if(nomcli.getText().isEmpty()){
                 nomcli.setBackground(ca);
             }
-            if(nitcli.getText().equals("")){
+            if(nitcli.getText().isEmpty()){
                 nitcli.setBackground(ca);
             }
-            if(corcli.getText().equals("")){
+            if(corcli.getText().isEmpty()){
                 corcli.setBackground(ca);
             }
             if(mas.isSelected()==false && fem.isSelected() == false){

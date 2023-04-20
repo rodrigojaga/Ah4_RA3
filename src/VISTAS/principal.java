@@ -8,6 +8,7 @@ package VISTAS;
 import MODELO.Json;
 import MODELO.clientesPOO;
 import MODELO.ah4DAORelacional;
+import MODELO.productosPOO;
 import MODELO.sucursalesPOO;
 import com.itextpdf.text.DocumentException;
 import java.io.FileNotFoundException;
@@ -28,13 +29,14 @@ public class principal extends javax.swing.JFrame {
     /**
      * Creates new form principal
      */
-    DefaultTableModel t1, t2;
+    DefaultTableModel t1, t2, t3;
 
     public principal() {
         initComponents();
         this.setLocationRelativeTo(null);
         datosSucuarsales();
         datosClientes();
+        datosProductos();
         
     }
 
@@ -221,6 +223,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         jButton6.setText("Carga Masiva");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Actualizar");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -314,6 +321,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         jButton13.setText("Carga Masiva");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
 
         jButton14.setText("Actualizar");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
@@ -330,6 +342,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         jButton16.setText("Exportar como PDF");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
 
         jButton24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
         jButton24.setBorder(null);
@@ -574,15 +591,17 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-
+        addPro ap = new addPro();
+        ap.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-
+        enviarPro();
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-
+        delePro();
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
@@ -654,6 +673,31 @@ public class principal extends javax.swing.JFrame {
                 
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        try {
+            buscarDestino("Productos");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        Json js = new Json();
+        try {
+            js.carga_masivaProductos();
+        } catch (IOException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton13ActionPerformed
+
     public void datosSucuarsales() {
         String columnas[] = {"ID Sucursal", "Nombre", "Dirección", "Correo Electronico", "Telefono"};
         t1 = new DefaultTableModel(null, columnas);
@@ -684,52 +728,93 @@ public class principal extends javax.swing.JFrame {
         }
         tablaClientes.setModel(t2);
     }
-
+    public void datosProductos() {
+        String columnas[] = {"ID Producto", "Nombre", "Descripcion", "Cantidad", "Precio"};
+        t3 = new DefaultTableModel(null, columnas);
+        ah4DAORelacional ad = new ah4DAORelacional();
+        for (productosPOO dat : ad.listarProductos()) {
+            Object ayuda[] = new Object[5];
+            ayuda[0] = dat.getId();
+            ayuda[1] = dat.getNombre();
+            ayuda[2] = dat.getDescripcion();
+            ayuda[3] = dat.getCantidad();
+            ayuda[4] = dat.getPrecio();
+            t3.addRow(ayuda);
+        }
+        tablaProducto.setModel(t3);
+    }
+    
     private void enviarDatos() {
         
-        
+        try{
         int id = (int) tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0);
         upcli up = new upcli();
         up.mostrar(id);
         up.setVisible(true);
         dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para modificar");}
     }
     private void enviarSucu() {
+        try{
         int id = (int) tablaSucursales.getValueAt(tablaSucursales.getSelectedRow(), 0);
         upSucu up = new upSucu();
         up.mostrar(id);
         up.setVisible(true);
         dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para modificar");}
+    }
+    private void enviarPro() {
+        try{
+        int id = (int) tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 0);
+        upPro up = new upPro();
+        up.mostrar(id);
+        up.setVisible(true);
+        dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null,"Debe elegir una fila para editar");}
     }
     
     private void enviarDele(){
+        try{
         int id = (int) tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0);
         deleteCli up = new deleteCli();
         up.mostrar(id);
         up.setVisible(true);
         dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para Eliminar");}
     }
     private void delesucu(){
+        try{
         int id = (int) tablaSucursales.getValueAt(tablaSucursales.getSelectedRow(), 0);
         deletesucu up = new deletesucu();
         up.mostrar(id);
         up.setVisible(true);
         dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para Eliminar");}
     }
-
-//    public void buscarDestino() throws FileNotFoundException, DocumentException{
-//        Json js = new Json();
-//        JFileChooser ch = new JFileChooser();
-//        ch.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        int se = ch.showSaveDialog(null);
-//        if(se == JFileChooser.APPROVE_OPTION){
-//            String ruta = ch.getSelectedFile().getPath();
-//            JOptionPane.showMessageDialog(null, "Ruta seleccionada: "+ruta);
-//            js.crearprueba(ruta);
-//        }else{
-//            JOptionPane.showMessageDialog(null, "Debe elegir una ruta");
-//        }
-//    }
+    private void delePro(){
+        try{
+        int id = (int) tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 0);
+        delePro dp = new delePro();
+        dp.mostrar(id);
+        dp.setVisible(true);
+        dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para Eliminar");}
+    }
+    
+    
+    public void buscarDestino(String titulo) throws FileNotFoundException, DocumentException{
+        Json js = new Json();
+        JFileChooser ch = new JFileChooser();
+        ch.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int se = ch.showSaveDialog(null);
+        if(se == JFileChooser.APPROVE_OPTION){
+            String ruta = ch.getSelectedFile().getPath();
+            JOptionPane.showMessageDialog(null, "Ruta seleccionada: "+ruta);
+            js.crearDocumento(ruta,titulo);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe elegir una ruta");
+        }
+    }
    
     
     /**
