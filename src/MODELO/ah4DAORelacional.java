@@ -16,30 +16,12 @@ public class ah4DAORelacional implements ah4DAO{
 
     //LinkedList<ah4> json = new LinkedList<>();
     Json js = new Json();
-    @Override
-    public LinkedList<ah4> listarSucursales() {
-        String sql = "SELECT id_sucursal, nombre, direccion,correo,telefono FROM sucursales;";
-        LinkedList<ah4> listar = new LinkedList<>();
-        try {
-            
-            con = acceso.Conectar();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                listar.add(new ah4(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
-                
-            }
-            return listar;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Algo ha salido mal: \n"+e+" \n Contactese con el desarrollador");
-        }
-        return null;
-    }
+    
     
      @Override
-    public LinkedList<ah4> listarClientes() {
+    public LinkedList<clientesPOO> listarClientes() {
         String sql = "SELECT id_cliente, nombre, nit,correo,genero FROM clientes;";
-        LinkedList<ah4> listar = new LinkedList<>();
+        LinkedList<clientesPOO> listar = new LinkedList<>();
         LinkedList<ah4Json> listara = new LinkedList<>();
         Json js = new Json();
         
@@ -49,7 +31,7 @@ public class ah4DAORelacional implements ah4DAO{
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                listar.add(new ah4(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5)));
+                listar.add(new clientesPOO(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5)));
                 listara.add(new ah4Json(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5)));
             }
             return listar;
@@ -60,10 +42,33 @@ public class ah4DAORelacional implements ah4DAO{
         return null;
     }
     
+    @Override
+    public LinkedList<sucursalesPOO> listarSucursales() {
+        String sql = "SELECT * FROM sucursales";
+        LinkedList<sucursalesPOO> listar = new LinkedList<>();
+//        LinkedList<ah4Json> listara = new LinkedList<>();
+//        Json js = new Json();
+        
+        try {
+            
+            con = acceso.Conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                listar.add(new sucursalesPOO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+//                listara.add(new ah4Json(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5)));
+            }
+            return listar;
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Algo ha salido mal: \n"+e+" \n Contactese con el desarrollador");
+        }
+        return null;
+    }
     
 
     @Override
-    public ah4 obtener(int codigo) {
+    public clientesPOO obtener(int codigo) {
         String sql = "select * from clientes where id_cliente= ?";
 
         try {
@@ -72,7 +77,29 @@ public class ah4DAORelacional implements ah4DAO{
             ps.setInt(1, codigo);
             rs = ps.executeQuery();
             if (rs.next()) {
-                ah4 ah = new ah4(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5));
+                clientesPOO ah = new clientesPOO(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5));
+                return ah;
+            } else {
+              JOptionPane.showMessageDialog(null,"Algo ha salido mal");  
+            }
+            return null;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Algo ha salido mal: \n"+e+" \n Contactese con el desarrollador");
+        }
+        return null;
+    }
+    
+    @Override
+    public sucursalesPOO obtenerSucu(int codigo) {
+        String sql = "select * from sucursales where id_sucursal= ?";
+
+        try {
+            con = acceso.Conectar();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, codigo);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                sucursalesPOO ah = new sucursalesPOO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5));
                 return ah;
             } else {
               JOptionPane.showMessageDialog(null,"Algo ha salido mal");  
@@ -85,7 +112,7 @@ public class ah4DAORelacional implements ah4DAO{
     }
 
     @Override
-    public void crearClientes(ah4 ah) {
+    public void crearClientes(clientesPOO ah) {
         String sql = "insert into clientes(nombre,nit,correo,genero) values (?,?,?,?);";
         try{
             con = acceso.Conectar();
@@ -97,9 +124,23 @@ public class ah4DAORelacional implements ah4DAO{
             ps.executeUpdate();
         }catch(Exception e){JOptionPane.showMessageDialog(null,"Algo ha salido mal: \n"+e+" \n Contactese con el desarrollador");}
     }
+    
+   @Override
+    public void crearSucursales(sucursalesPOO ah) {
+        String sql = "insert into sucursales(nombre,direccion,correo,telefono) values (?,?,?,?);";
+        try{
+            con = acceso.Conectar();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, ah.getNombre());
+            ps.setString(2, ah.getDireccion());
+            ps.setString(3, ah.getCorreo());
+            ps.setInt(4, ah.getTelefono());
+            ps.executeUpdate();
+        }catch(Exception e){JOptionPane.showMessageDialog(null,"Algo ha salido mal: \n"+e+" \n Contactese con el desarrollador");}
+    }
 
     @Override
-    public void modificarCliente(ah4 ah) {
+    public void modificarCliente(clientesPOO ah) {
         String sql = "update clientes set nombre=?, nit=? , correo = ?, genero =? where id_cliente=?;";
         try {
             
@@ -117,10 +158,42 @@ public class ah4DAORelacional implements ah4DAO{
             JOptionPane.showMessageDialog(null,"Algo ha salido mal: \n"+e+" \n Contactese con el desarrollador");
         }
     }
+    
+    @Override
+    public void modificarSucursal(sucursalesPOO ah) {
+        String sql = "update sucursales set nombre=?, direccion=? , correo = ?, telefono =? where id_sucursal=?;";
+        try {
+            
+            con = acceso.Conectar();
+            ps = con.prepareStatement(sql);
+            
+            ps.setString(1, ah.getNombre());
+            ps.setString(2, ah.getDireccion());
+            ps.setString(3, ah.getCorreo());
+            ps.setInt(4, ah.getTelefono());
+            ps.setInt(5, ah.getId());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Algo ha salido mal: \n"+e+" \n Contactese con el desarrollador");
+        }
+    }
 
     @Override
     public void eliminar(int codigo) {
         String sql = "DELETE FROM clientes WHERE id_cliente = ?;";
+        try {
+            con = acceso.Conectar();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, codigo);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }
+    }
+    @Override
+    public void eliminarSucu(int codigo) {
+        String sql = "DELETE FROM sucursales WHERE id_sucursal = ?;";
         try {
             con = acceso.Conectar();
             ps = con.prepareStatement(sql);
@@ -154,6 +227,20 @@ public class ah4DAORelacional implements ah4DAO{
         }
         return null;
     }
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
    
     

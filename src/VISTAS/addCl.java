@@ -5,7 +5,7 @@
  */
 package VISTAS;
 
-import MODELO.ah4;
+import MODELO.clientesPOO;
 import MODELO.ah4DAORelacional;
 import img.TextPrompt;
 import java.awt.Color;
@@ -274,14 +274,14 @@ public class addCl extends javax.swing.JFrame {
     
     public void enviarDatos(){
         if(mas.isSelected()==true){
-            ah4 ah = new ah4(nomcli.getText(),Integer.parseInt(nitcli.getText()),corcli.getText(),"M");
+            clientesPOO ah = new clientesPOO(nomcli.getText(),Integer.parseInt(nitcli.getText()),corcli.getText(),"M");
             ah4DAORelacional ad = new ah4DAORelacional();
             ad.crearClientes(ah);
             principal pr = new principal();
             pr.setVisible(true);
             dispose();
         }else if(fem.isSelected()==true){
-            ah4 ah = new ah4(nomcli.getText(),Integer.parseInt(nitcli.getText()),corcli.getText(),"F");
+            clientesPOO ah = new clientesPOO(nomcli.getText(),Integer.parseInt(nitcli.getText()),corcli.getText(),"F");
             ah4DAORelacional ad = new ah4DAORelacional();
             ad.crearClientes(ah);
             principal pr = new principal();

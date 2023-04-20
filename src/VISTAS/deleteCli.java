@@ -5,7 +5,7 @@
  */
 package VISTAS;
 
-import MODELO.ah4;
+import MODELO.clientesPOO;
 import MODELO.ah4DAORelacional;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -248,7 +248,7 @@ public class deleteCli extends javax.swing.JFrame {
     public void mostrar(int id) {
         del = id;
         ah4DAORelacional ev = new ah4DAORelacional();
-        ah4 eve = ev.obtener(id);
+        clientesPOO eve = ev.obtener(id);
         if(eve.getGenero().equals("M")||eve.getGenero().equals("m")){
             codcli.setText(eve.getId() + "");
             nomcli.setText(eve.getNombre() + "");

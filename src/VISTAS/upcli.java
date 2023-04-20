@@ -5,7 +5,7 @@
  */
 package VISTAS;
 
-import MODELO.ah4;
+import MODELO.clientesPOO;
 import MODELO.ah4DAORelacional;
 import img.TextPrompt;
 import java.awt.Color;
@@ -249,7 +249,7 @@ public class upcli extends javax.swing.JFrame {
     
     public void mostrar(int id) {
         ah4DAORelacional ev = new ah4DAORelacional();
-        ah4 eve = ev.obtener(id);
+        clientesPOO eve = ev.obtener(id);
         if(eve.getGenero().equals("M")||eve.getGenero().equals("m")){
             codcli.setText(eve.getId() + "");
             nomcli.setText(eve.getNombre() + "");
@@ -271,13 +271,9 @@ public class upcli extends javax.swing.JFrame {
     }
     
     public void enviar(){
-                    //JOptionPane.showMessageDialog(null, "Entro a enviar");
-
         if(mas.isSelected() == true){
-                       // JOptionPane.showMessageDialog(null, "Entro a masculino");
-
             principal pr = new principal();
-            ah4 ah = new ah4(Integer.parseInt(codcli.getText()),nomcli.getText(),Integer.parseInt(nitcli.getText()),
+            clientesPOO ah = new clientesPOO(Integer.parseInt(codcli.getText()),nomcli.getText(),Integer.parseInt(nitcli.getText()),
             corcli.getText(),"M");
             ah4DAORelacional ahd = new ah4DAORelacional();
             ahd.modificarCliente(ah);
@@ -287,7 +283,7 @@ public class upcli extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(null, "Entro a femenisnp");
             ah4DAORelacional ahd = new ah4DAORelacional();
             principal pr = new principal();
-            ah4 ah = new ah4(Integer.parseInt(codcli.getText()),nomcli.getText(),Integer.parseInt(nitcli.getText()),
+            clientesPOO ah = new clientesPOO(Integer.parseInt(codcli.getText()),nomcli.getText(),Integer.parseInt(nitcli.getText()),
             corcli.getText(),"F");
             ahd.modificarCliente(ah);
             pr.setVisible(true);

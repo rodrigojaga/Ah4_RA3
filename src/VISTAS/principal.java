@@ -6,14 +6,17 @@
 package VISTAS;
 
 import MODELO.Json;
-import MODELO.ah4;
+import MODELO.clientesPOO;
 import MODELO.ah4DAORelacional;
+import MODELO.sucursalesPOO;
 import com.itextpdf.text.DocumentException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -403,6 +406,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         jButton4.setText("Carga Masiva");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Actualizar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -419,6 +427,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         jButton10.setText("Exportar como PDF");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
         jButton27.setBorder(null);
@@ -521,15 +534,17 @@ public class principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+        addSucursal as = new addSucursal();
+        as.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
+        enviarSucu();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-
+        delesucu();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -616,11 +631,34 @@ public class principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton21ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Json js = new Json();
+        try {
+            js.carga_masivaSucursales();
+        } catch (IOException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        Json js = new Json();
+        try {
+            js.crearjsonSucursales();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+    }//GEN-LAST:event_jButton10ActionPerformed
+
     public void datosSucuarsales() {
         String columnas[] = {"ID Sucursal", "Nombre", "Dirección", "Correo Electronico", "Telefono"};
         t1 = new DefaultTableModel(null, columnas);
         ah4DAORelacional ad = new ah4DAORelacional();
-        for (ah4 dat : ad.listarSucursales()) {
+        for (sucursalesPOO dat : ad.listarSucursales()) {
             Object ayuda[] = new Object[5];
             ayuda[0] = dat.getId();
             ayuda[1] = dat.getNombre();
@@ -631,12 +669,11 @@ public class principal extends javax.swing.JFrame {
         }
         tablaSucursales.setModel(t1);
     }
-
     public void datosClientes() {
         String columnas[] = {"ID Cliente", "Nombre", "Nit", "Correo Electronico", "Genero"};
         t2 = new DefaultTableModel(null, columnas);
         ah4DAORelacional ad = new ah4DAORelacional();
-        for (ah4 dat : ad.listarClientes()) {
+        for (clientesPOO dat : ad.listarClientes()) {
             Object ayuda[] = new Object[5];
             ayuda[0] = dat.getId();
             ayuda[1] = dat.getNombre();
@@ -649,8 +686,17 @@ public class principal extends javax.swing.JFrame {
     }
 
     private void enviarDatos() {
+        
+        
         int id = (int) tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0);
         upcli up = new upcli();
+        up.mostrar(id);
+        up.setVisible(true);
+        dispose();
+    }
+    private void enviarSucu() {
+        int id = (int) tablaSucursales.getValueAt(tablaSucursales.getSelectedRow(), 0);
+        upSucu up = new upSucu();
         up.mostrar(id);
         up.setVisible(true);
         dispose();
@@ -663,7 +709,29 @@ public class principal extends javax.swing.JFrame {
         up.setVisible(true);
         dispose();
     }
+    private void delesucu(){
+        int id = (int) tablaSucursales.getValueAt(tablaSucursales.getSelectedRow(), 0);
+        deletesucu up = new deletesucu();
+        up.mostrar(id);
+        up.setVisible(true);
+        dispose();
+    }
 
+//    public void buscarDestino() throws FileNotFoundException, DocumentException{
+//        Json js = new Json();
+//        JFileChooser ch = new JFileChooser();
+//        ch.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//        int se = ch.showSaveDialog(null);
+//        if(se == JFileChooser.APPROVE_OPTION){
+//            String ruta = ch.getSelectedFile().getPath();
+//            JOptionPane.showMessageDialog(null, "Ruta seleccionada: "+ruta);
+//            js.crearprueba(ruta);
+//        }else{
+//            JOptionPane.showMessageDialog(null, "Debe elegir una ruta");
+//        }
+//    }
+   
+    
     /**
      * @param args the command line arguments
      */
