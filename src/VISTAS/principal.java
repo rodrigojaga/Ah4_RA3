@@ -6,14 +6,20 @@
 package VISTAS;
 
 import MODELO.Json;
-import MODELO.ah4;
+import MODELO.clientesPOO;
 import MODELO.ah4DAORelacional;
+import MODELO.productosPOO;
+import MODELO.sucursalesPOO;
+import MODELO.vendedoresPOO;
 import com.itextpdf.text.DocumentException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,13 +31,15 @@ public class principal extends javax.swing.JFrame {
     /**
      * Creates new form principal
      */
-    DefaultTableModel t1, t2;
+    DefaultTableModel t1, t2, t3,t4;
 
     public principal() {
         initComponents();
         this.setLocationRelativeTo(null);
         datosSucuarsales();
         datosClientes();
+        datosProductos();
+        datosVendedores(); 
         
     }
 
@@ -59,12 +67,12 @@ public class principal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablavendedores = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton25 = new javax.swing.JButton();
+        jb1 = new javax.swing.JButton();
+        jb2 = new javax.swing.JButton();
+        jb3 = new javax.swing.JButton();
+        jb4 = new javax.swing.JButton();
+        jb5 = new javax.swing.JButton();
+        jb6 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaProducto = new javax.swing.JTable();
@@ -210,41 +218,51 @@ public class principal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablavendedores);
 
-        jButton1.setText("Crear");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jb1.setText("Crear");
+        jb1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jb1ActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Carga Masiva");
-
-        jButton7.setText("Actualizar");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jb2.setText("Carga Masiva");
+        jb2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                jb2ActionPerformed(evt);
             }
         });
 
-        jButton8.setText("Eliminar");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        jb3.setText("Actualizar");
+        jb3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                jb3ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Exportar como PDF");
-
-        jButton25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
-        jButton25.setBorder(null);
-        jButton25.setBorderPainted(false);
-        jButton25.setContentAreaFilled(false);
-        jButton25.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton25.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
-        jButton25.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
-        jButton25.addActionListener(new java.awt.event.ActionListener() {
+        jb4.setText("Eliminar");
+        jb4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton25ActionPerformed(evt);
+                jb4ActionPerformed(evt);
+            }
+        });
+
+        jb5.setText("Exportar como PDF");
+        jb5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb5ActionPerformed(evt);
+            }
+        });
+
+        jb6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
+        jb6.setBorder(null);
+        jb6.setBorderPainted(false);
+        jb6.setContentAreaFilled(false);
+        jb6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jb6.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
+        jb6.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
+        jb6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb6ActionPerformed(evt);
             }
         });
 
@@ -258,16 +276,16 @@ public class principal extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+                            .addComponent(jb1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jb3, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jb2, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                            .addComponent(jb4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton25))
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jb6))
+                    .addComponent(jb5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -276,16 +294,16 @@ public class principal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jb1, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(jb2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jb3, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(jb4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jb5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton25)
+                .addComponent(jb6)
                 .addContainerGap())
         );
 
@@ -311,6 +329,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         jButton13.setText("Carga Masiva");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
 
         jButton14.setText("Actualizar");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
@@ -327,6 +350,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         jButton16.setText("Exportar como PDF");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
 
         jButton24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
         jButton24.setBorder(null);
@@ -403,6 +431,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         jButton4.setText("Carga Masiva");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Actualizar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -419,6 +452,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         jButton10.setText("Exportar como PDF");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
         jButton27.setBorder(null);
@@ -521,15 +559,17 @@ public class principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+        addSucursal as = new addSucursal();
+        as.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
+        enviarSucu();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-
+        delesucu();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -546,28 +586,32 @@ public class principal extends javax.swing.JFrame {
         enviarDele();
     }//GEN-LAST:event_jButton20ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb1ActionPerformed
+        addVen av = new addVen();
+        av.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jb1ActionPerformed
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jb3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb3ActionPerformed
+        enviarVen();
+    }//GEN-LAST:event_jb3ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void jb4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb4ActionPerformed
+        deleVen();
+    }//GEN-LAST:event_jb4ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-
+        addPro ap = new addPro();
+        ap.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-
+        enviarPro();
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-
+        delePro();
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
@@ -582,11 +626,11 @@ public class principal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton24ActionPerformed
 
-    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+    private void jb6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb6ActionPerformed
         login lp = new login();
         lp.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButton25ActionPerformed
+    }//GEN-LAST:event_jb6ActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
         login lp = new login();
@@ -616,11 +660,78 @@ public class principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton21ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Json js = new Json();
+        try {
+            js.carga_masivaSucursales();
+        } catch (IOException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        Json js = new Json();
+        try {
+            js.crearjsonSucursales();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        try {
+            buscarDestino("Productos");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb2ActionPerformed
+        Json js = new Json();
+        try {
+            js.carga_masivaVendedores();
+        } catch (IOException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dispose();
+        this.setVisible(true);
+    }//GEN-LAST:event_jb2ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        Json js = new Json();
+        try {
+            js.carga_masivaProductos();
+        } catch (IOException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jb5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb5ActionPerformed
+        try {
+            buscarDestino("Vendedores");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jb5ActionPerformed
+
     public void datosSucuarsales() {
         String columnas[] = {"ID Sucursal", "Nombre", "Dirección", "Correo Electronico", "Telefono"};
         t1 = new DefaultTableModel(null, columnas);
         ah4DAORelacional ad = new ah4DAORelacional();
-        for (ah4 dat : ad.listarSucursales()) {
+        for (sucursalesPOO dat : ad.listarSucursales()) {
             Object ayuda[] = new Object[5];
             ayuda[0] = dat.getId();
             ayuda[1] = dat.getNombre();
@@ -631,12 +742,11 @@ public class principal extends javax.swing.JFrame {
         }
         tablaSucursales.setModel(t1);
     }
-
     public void datosClientes() {
         String columnas[] = {"ID Cliente", "Nombre", "Nit", "Correo Electronico", "Genero"};
         t2 = new DefaultTableModel(null, columnas);
         ah4DAORelacional ad = new ah4DAORelacional();
-        for (ah4 dat : ad.listarClientes()) {
+        for (clientesPOO dat : ad.listarClientes()) {
             Object ayuda[] = new Object[5];
             ayuda[0] = dat.getId();
             ayuda[1] = dat.getNombre();
@@ -647,23 +757,159 @@ public class principal extends javax.swing.JFrame {
         }
         tablaClientes.setModel(t2);
     }
-
+    public void datosProductos() {
+        String columnas[] = {"ID Producto", "Nombre", "Descripcion", "Cantidad", "Precio"};
+        t3 = new DefaultTableModel(null, columnas);
+        ah4DAORelacional ad = new ah4DAORelacional();
+        for (productosPOO dat : ad.listarProductos()) {
+            Object ayuda[] = new Object[5];
+            ayuda[0] = dat.getId();
+            ayuda[1] = dat.getNombre();
+            ayuda[2] = dat.getDescripcion();
+            ayuda[3] = dat.getCantidad();
+            ayuda[4] = dat.getPrecio();
+            t3.addRow(ayuda);
+        }
+        tablaProducto.setModel(t3);
+    }
+    public void datosVendedores(){
+       String columnas[] = {"ID Vendedor", "Nombre", "Caja","Ventas" ,"Genero"};
+        t4 = new DefaultTableModel(null, columnas);
+        ah4DAORelacional ad = new ah4DAORelacional();
+        for (vendedoresPOO dat : ad.listarVendedores()) {
+            Object ayuda[] = new Object[5];
+            ayuda[0] = dat.getId();
+            ayuda[1] = dat.getNombre();
+            ayuda[2] = dat.getCaja();
+            ayuda[3] = dat.getVentas();
+            ayuda[4] = dat.getGenero();
+            t4.addRow(ayuda);
+        }
+        tablavendedores.setModel(t4); 
+    }
+    
+    
     private void enviarDatos() {
+        
+        try{
         int id = (int) tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0);
         upcli up = new upcli();
         up.mostrar(id);
         up.setVisible(true);
         dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para modificar");}
+    }
+    private void enviarSucu() {
+        try{
+        int id = (int) tablaSucursales.getValueAt(tablaSucursales.getSelectedRow(), 0);
+        upSucu up = new upSucu();
+        up.mostrar(id);
+        up.setVisible(true);
+        dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para modificar");}
+    }
+    private void enviarPro() {
+        try{
+        int id = (int) tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 0);
+        upPro up = new upPro();
+        up.mostrar(id);
+        up.setVisible(true);
+        dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null,"Debe elegir una fila para editar");}
+    }
+    private void enviarVen(){
+        try{
+        int id = (int) tablavendedores.getValueAt(tablavendedores.getSelectedRow(), 0);
+        upVen up = new upVen();
+        up.mostrar(id);
+        up.setVisible(true);
+        dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null,"Debe elegir una fila para editar");
+            System.out.println(e);}
+        
     }
     
+    
     private void enviarDele(){
+        try{
         int id = (int) tablaClientes.getValueAt(tablaClientes.getSelectedRow(), 0);
         deleteCli up = new deleteCli();
         up.mostrar(id);
         up.setVisible(true);
         dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para Eliminar");}
     }
+    private void delesucu(){
+        try{
+        int id = (int) tablaSucursales.getValueAt(tablaSucursales.getSelectedRow(), 0);
+        deletesucu up = new deletesucu();
+        up.mostrar(id);
+        up.setVisible(true);
+        dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para Eliminar");}
+    }
+    private void delePro(){
+        try{
+        int id = (int) tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 0);
+        delePro dp = new delePro();
+        dp.mostrar(id);
+        dp.setVisible(true);
+        dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para Eliminar");}
+    }
+    private void deleVen(){
+        try{
+        int id = (int) tablavendedores.getValueAt(tablavendedores.getSelectedRow(), 0);
+        deleVen dp = new deleVen();
+        dp.mostrar(id);
+        dp.setVisible(true);
+        dispose();
+        }catch(Exception e){JOptionPane.showMessageDialog(null, "DEbe elegir una fila para Eliminar");}
+    }
+    
+    public void buscarDestino(String titulo) throws FileNotFoundException, DocumentException{
+        Json js = new Json();
+        JFileChooser ch = new JFileChooser();
+        ch.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int se = ch.showSaveDialog(null);
+        if(se == JFileChooser.APPROVE_OPTION){
+            String ruta = ch.getSelectedFile().getPath();
+            JOptionPane.showMessageDialog(null, "Ruta seleccionada: "+ruta);
+            js.crearDocumento(ruta,titulo);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe elegir una ruta");
+        }
+    }
+    
+   public void ocultar(){
+    
+       jButton3.setVisible(false);
+       jButton4.setVisible(false);
+       jButton5.setVisible(false);
+    
+       jButton9.setVisible(false);
+       jButton10.setVisible(false);
 
+       jButton12.setVisible(false);
+       jButton13.setVisible(false);
+       jButton14.setVisible(false);
+       jButton15.setVisible(false);
+       jButton16.setVisible(false);
+       jButton17.setVisible(false);
+       jButton18.setVisible(false);
+       jButton19.setVisible(false);
+       jButton20.setVisible(false);
+       jButton21.setVisible(false);
+    
+       jButton24.setVisible(false);
+  
+       jButton26.setVisible(false);
+       jButton27.setVisible(false);
+     
+       
+   }
+   
+    
     /**
      * @param args the command line arguments
      */
@@ -690,6 +936,7 @@ public class principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -700,7 +947,6 @@ public class principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
@@ -710,19 +956,14 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JPanel jPanel1;
@@ -735,6 +976,12 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton jb1;
+    private javax.swing.JButton jb2;
+    private javax.swing.JButton jb3;
+    private javax.swing.JButton jb4;
+    private javax.swing.JButton jb5;
+    private javax.swing.JButton jb6;
     private javax.swing.JTable tablaClientes;
     private javax.swing.JTable tablaProducto;
     private javax.swing.JTable tablaSucursales;

@@ -5,6 +5,8 @@
  */
 package VISTAS;
 
+import MODELO.ah4DAORelacional;
+import MODELO.vendedoresPOO;
 import img.TextPrompt;
 import javax.swing.JOptionPane;
 
@@ -184,13 +186,26 @@ public class login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(tfUsuario.getText().equals("admin")&&tfContra.getText().equals("admin")){
             principal pr = new principal();
+            JOptionPane.showMessageDialog(null, "Bienvenido admin");
             pr.setVisible(true);
             dispose();
         }else{
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+            consulta();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public void consulta(){
+        ah4DAORelacional ahd = new ah4DAORelacional();
+        vendedoresPOO vp = ahd.login(tfUsuario.getText(), tfContra.getText());
+        if (vp != null){
+            principal pr = new principal();
+            JOptionPane.showMessageDialog(null, "Bienvenido "+tfUsuario.getText());
+            pr.setVisible(true);
+            pr.ocultar();
+            dispose();
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -216,6 +231,7 @@ public class login extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
