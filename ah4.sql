@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2023 a las 04:38:43
+-- Tiempo de generación: 21-04-2023 a las 03:11:12
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -40,10 +40,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nombre`, `nit`, `correo`, `genero`) VALUES
-(1, 'Martin', 18549671, 'marti@gmail.com', 'M'),
-(2, 'Juan', 78459612, 'juan@gmail.com', 'M'),
-(3, 'Maria', 74152986, 'maria@gmail.com', 'F'),
-(4, 'GokuSSj', 12345678, 'gokuhd@gmail.com', 'M');
+(1, 'Martin', 18549671, 'marti@gmail.com', 'M');
 
 -- --------------------------------------------------------
 
@@ -58,6 +55,13 @@ CREATE TABLE `productos` (
   `cantidad` int(11) DEFAULT NULL,
   `precio` double(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `cantidad`, `precio`) VALUES
+(1, 'Doritos', 'Fritura', 500, 3.75);
 
 -- --------------------------------------------------------
 
@@ -78,7 +82,7 @@ CREATE TABLE `sucursales` (
 --
 
 INSERT INTO `sucursales` (`id_sucursal`, `nombre`, `direccion`, `correo`, `telefono`) VALUES
-(1, 'Estrelita', 'Guatemala', 'estregua@gmail.com', 12457895);
+(1, 'EstrelitaLP', 'Zona 10', 'estreZ10@gmail.com', 12457810);
 
 -- --------------------------------------------------------
 
@@ -88,11 +92,19 @@ INSERT INTO `sucursales` (`id_sucursal`, `nombre`, `direccion`, `correo`, `telef
 
 CREATE TABLE `vendedores` (
   `id_vendedor` int(11) NOT NULL,
-  `nombre` varchar(100) DEFAULT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
   `caja` int(11) DEFAULT NULL,
   `ventas` int(11) DEFAULT NULL,
-  `genero` varchar(2) DEFAULT NULL
+  `genero` varchar(2) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `vendedores`
+--
+
+INSERT INTO `vendedores` (`id_vendedor`, `nombre`, `caja`, `ventas`, `genero`, `password`) VALUES
+(1, 'Paco', 1, 89, 'M', 'aguacate');
 
 --
 -- Índices para tablas volcadas
@@ -130,13 +142,13 @@ ALTER TABLE `vendedores`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `sucursales`
@@ -148,7 +160,7 @@ ALTER TABLE `sucursales`
 -- AUTO_INCREMENT de la tabla `vendedores`
 --
 ALTER TABLE `vendedores`
-  MODIFY `id_vendedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_vendedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
